@@ -35,61 +35,6 @@ describe('1、Test the Timer init', function () {
         expect(component.instance().props.step).toEqual(1000);
         expect(component.instance().props.renderChild).toEqual(renderChild);
     });
-//
-//     // it('test the Timer`s pause & recover action run success', function () {
-//     //     let i = 0;
-//     //     const handleTrigger = () => {
-//     //         i++;
-//     //         console.log('i ->', i);
-//     //     };
-//     //     const component = mount(
-//     //         <Timer
-//     //             onTrigger={handleTrigger}
-//     //         />
-//     //     );
-//     //     setTimeout(() => {
-//     //         expect(component.instance().state.leftTime).toEqual(8000);
-//     //         component.getNode().pause();
-//     //         setTimeout(() => {
-//     //             expect(component.instance().state.leftTime).toEqual(8000);
-//     //             component.getNode().recover();
-//     //             setTimeout(() => {
-//     //                 expect(component.instance().state.leftTime).toEqual(6000);
-//     //             }, 2000);
-//     //         }, 2000);
-//     //     }, 2000);
-//     // });
-//
-//     // it('test the Timer`s stop & reStart & reStartImmediate action run success', function () {
-//     //     let i = 0;
-//     //     const handleTrigger = () => {
-//     //         i++;
-//     //         console.log('i ->', i);
-//     //     };
-//     //     const component = mount(
-//     //         <Timer
-//     //             onTrigger={handleTrigger}
-//     //         />
-//     //     );
-//     //     setTimeout(() => {
-//     //         expect(component.instance().state.leftTime).toEqual(8000);
-//     //         component.getNode().stop();
-//     //         expect(component.instance().state.leftTime).toEqual(10000);
-//     //         setTimeout(() => {
-//     //             expect(component.instance().state.leftTime).toEqual(8000);
-//     //             i = 0;
-//     //             component.getNode().reStart();
-//     //             expect(i).toEqual(0);
-//     //             expect(component.instance().state.leftTime).toEqual(10000);
-//     //             setTimeout(() => {
-//     //                 i = 0;
-//     //                 component.getNode().reStartImmediate();
-//     //                 expect(i).toEqual(1);
-//     //                 expect(component.instance().state.leftTime).toEqual(10000);
-//     //             }, 2000);
-//     //         }, 2000);
-//     //     }, 2000);
-//     // });
 });
 
 (function () {
@@ -109,15 +54,6 @@ describe('1、Test the Timer init', function () {
         />
     );
 
-    // setTimeout(() => {
-    //     describe('2、Test the code`s run', function () {
-    //         it('test the code is running properly after 1 second ', function () {
-    //             expect(component.instance().state.leftTime).toEqual(3000);
-    //             expect(component.find('div').html()).toEqual('<div class="child">3000</div>');
-    //         });
-    //     });
-    // }, 1000);
-
     setTimeout(() => {
         describe('2、Test the code`s run', function () {
             it('test the code is running properly after 5 second ', function () {
@@ -128,24 +64,4 @@ describe('1、Test the Timer init', function () {
         });
         run();
     }, 5000);
-
-    // setTimeout(() => {
-    //     describe('3、Test the code`s pause', function () {
-    //         it('test the code is running properly after 6 second ', function () {
-    //             expect(component.instance().state.leftTime).toEqual(3000);
-    //             component.getNode().recover();
-    //             expect(component.find('div').html()).toEqual('<div class="child">3000</div>');
-    //         });
-    //     });
-    //     run();
-    // }, 6000);
-    //
-    // setTimeout(() => {
-    //     describe('3、Test the code`s pause', function () {
-    //         it('test the code is running properly after 7 second ', function () {
-    //             expect(component.instance().state.leftTime).toEqual(2000);
-    //         });
-    //     });
-    //     run();
-    // }, 7000);
 }());
