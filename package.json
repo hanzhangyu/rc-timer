@@ -13,13 +13,14 @@
     "delay",
     "redux"
   ],
-  "author": "PaulHan <zhangyu.han@outlook.com>",
+  "author": "paulhan <zhangyu.han@outlook.com>",
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha --no-timeouts",
+    "test": "mocha test/.setup.js test/**/*-test.js --delay",
     "build": "rimraf lib && babel src --out-dir lib && npm run demo",
     "demo": "webpack",
+    "dev": "webpack --watch",
     "prepublish": "npm run build",
     "start": "webpack-dev-server --watch",
     "coveralls": "coveralls"
@@ -41,7 +42,6 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.24.1",
     "coveralls": "^2.13.1",
-    "cross-env": "^2.0.1",
     "css-loader": "~0.16.0",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",

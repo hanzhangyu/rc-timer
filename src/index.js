@@ -1,11 +1,12 @@
-import React, {PropTypes, cloneElement, Component} from "react"
+import React, {PropTypes} from 'react';
 
-export default class Timer extends Component {
+export default class Timer extends React.Component {
     static propTypes = {
         onTrigger: PropTypes.func.isRequired, // 定时器执行trigger函数
         timeout: PropTypes.number, // 定时器时间
         step: PropTypes.number, // 更新剩余时间的时间间隔
         running: PropTypes.bool, // 是否继续运行
+        pause: PropTypes.bool, // 是否停止
         async: PropTypes.bool, // 忽略trigger函数是否执行完成
         immediate: PropTypes.bool, // 首次是否立即执行
         renderChild: PropTypes.func, // 渲染的子节点默认为无，当此函树存在的时会启用setTnterval对setTimeout拆分，并计入每一个step的剩余时间
@@ -18,6 +19,7 @@ export default class Timer extends Component {
         async: true,
         immediate: true,
         step: 1000,
+        renderChild: undefined
     };
 
     constructor(props) {
@@ -25,26 +27,30 @@ export default class Timer extends Component {
 
         this.state = {
             leftTime: props.timeout
-        }
+        };
 
         this.pause = () => {
             this.clearTimer();
-        }
+        };
         this.recover = () => {
             this.combineEvent(false);// 恢复没有立刻执行这一说法
-
-        }
+        };
         this.stop = () => {
             this.resetTimer();
-        }
+        };
         this.reStart = () => {
-            this.startTimer();
-        }
+            this.combineEvent();
+        };
+        this.reStartImmediate = () => {
+            this.combineEventAsync();
+        };
     }
 
-    componentWillReceiveProps(nextProps, nextState) {
-        // console.warn('nextState',nextState)
-        // console.warn('nextState',this.state)
+    componentDidMount() {
+        this.startTimer();
+    }
+
+    componentWillReceiveProps(nextProps) {
         // 重启
         if (!nextProps.running && this.props.running) {
             this.stop();
@@ -60,47 +66,47 @@ export default class Timer extends Component {
         }
     }
 
-    componentDidMount() {
-        this.startTimer();
-    }
-
     componentWillUnmount() {
         this.clearTimer();
     }
 
     startTimer = () => {
-        this.props.immediate ? this.combineEventAsync() : this.combineEvent();
-    }
+        if (this.props.immediate) {
+            this.combineEventAsync();
+            return;
+        }
+        this.combineEvent();
+    };
 
-    resetTimer = (callback, resetState) => {
+    resetTimer = (callback = () => undefined, resetState = true) => {
         if (resetState) {
-            // console.warn('this.props.timeout',this.props.timeout)
             this.setState({leftTime: this.props.timeout}, () => {
                 this.clearTimer();
                 callback();
             });
             return;
         }
-        // console.warn('keepState',keepState)
-        console.warn('this.state.leftTime', this.state.leftTime)
         this.clearTimer();
-    }
-
-    clearTimer = () => {
-        this.timer && clearInterval(this.timer);
-        this.timer && clearTimeout(this.timer);
+        callback();
     };
 
-    combineEvent = (resetState = true) => {
+    clearTimer = () => {
+        if (this.timer) {
+            clearInterval(this.timer);
+            clearTimeout(this.timer);
+            this.timer = undefined;
+        }
+    };
+
+    combineEvent = (resetState) => {
         this.resetTimer(() => {
             if (this.props.renderChild) {
                 this.loopCalcLeftTime();
                 return;
             }
-            this.timer = setTimeout(this.combineEventAsync, resetState ? this.props.timeout : this.state.leftTime)
-            console.warn('commint')
+            this.timer = setTimeout(this.combineEventAsync, resetState ? this.props.timeout : this.state.leftTime);
         }, resetState);
-    }
+    };
 
     combineEventAsync = () => {
         const {onTrigger, async} = this.props;
@@ -108,11 +114,11 @@ export default class Timer extends Component {
         if (_triger && typeof _triger.then === 'function') {
             _triger.then(() => {
                 this.combineEvent();
-            })
-        } else {
-            async && this.combineEvent();
+            });
+        } else if (async) {
+            this.combineEvent();
         }
-    }
+    };
 
     loopCalcLeftTime = () => {
         const step = this.props.step;
@@ -122,10 +128,9 @@ export default class Timer extends Component {
                 this.combineEventAsync();// 注意这个同步的函数必须放在这个定时器中，不能分开写一个setTimeout，别忘了settimeout是不等于setinterval总和的
                 prevLeftTime = this.props.timeout;
             }
-            console.warn('val', prevLeftTime - step)
-            this.setState({leftTime: prevLeftTime - step})
-        }, step)
-    }
+            this.setState({leftTime: prevLeftTime - step});
+        }, step);
+    };
 
     render() {
         const {renderChild} = this.props;
