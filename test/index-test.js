@@ -30,7 +30,7 @@ describe('1、Test the Timer init', function () {
         expect(component.instance().props.timeout).toEqual(10000);
         expect(component.instance().props.running).toEqual(true);
         expect(component.instance().props.pause).toEqual(false);
-        expect(component.instance().props.async).toEqual(true);
+        expect(component.instance().props.sync).toEqual(true);
         expect(component.instance().props.immediate).toEqual(true);
         expect(component.instance().props.step).toEqual(1000);
         expect(component.instance().props.renderChild).toEqual(renderChild);

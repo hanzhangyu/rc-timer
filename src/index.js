@@ -7,7 +7,7 @@ export default class Timer extends React.Component {
         step: PropTypes.number, // 更新剩余时间的时间间隔
         running: PropTypes.bool, // 是否继续运行
         pause: PropTypes.bool, // 是否停止
-        async: PropTypes.bool, // 忽略trigger函数是否执行完成
+        sync: PropTypes.bool, // 忽略trigger函数是否执行完成
         immediate: PropTypes.bool, // 首次是否立即执行
         renderChild: PropTypes.func, // 渲染的子节点默认为无，当此函树存在的时会启用setTnterval对setTimeout拆分，并计入每一个step的剩余时间
     };
@@ -16,7 +16,7 @@ export default class Timer extends React.Component {
         timeout: 10000,
         running: true,
         pause: false,
-        async: true,
+        sync: true,
         immediate: true,
         step: 1000,
         renderChild: undefined
@@ -38,10 +38,10 @@ export default class Timer extends React.Component {
         this.stop = () => {
             this.resetTimer();
         };
-        this.reStart = () => {
+        this.restart = () => {
             this.combineEvent();
         };
-        this.reStartImmediate = () => {
+        this.restartImmediate = () => {
             this.combineEventAsync();
         };
     }
@@ -55,7 +55,7 @@ export default class Timer extends React.Component {
         if (!nextProps.running && this.props.running) {
             this.stop();
         } else if (nextProps.running && !this.props.running) {
-            this.reStart();
+            this.restart();
         }
 
         // 暂停
@@ -109,13 +109,13 @@ export default class Timer extends React.Component {
     };
 
     combineEventAsync = () => {
-        const {onTrigger, async} = this.props;
+        const {onTrigger, sync} = this.props;
         const _triger = onTrigger();
         if (_triger && typeof _triger.then === 'function') {
             _triger.then(() => {
                 this.combineEvent();
             });
-        } else if (async) {
+        } else if (sync) {
             this.combineEvent();
         }
     };
