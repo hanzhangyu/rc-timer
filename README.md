@@ -1,7 +1,7 @@
 
 # rc-timer
 
-Create a timed task in react.
+Create a timed task in react. Uninstall automatically when component is unmounted.
 
 > travis is comming soon
 
@@ -48,7 +48,7 @@ const timerProps={
 > 这是请保持 `Timer` 的 `sync` 这个props为初始值（true），`Timer` 就会正常的loop。
 
 
-#### 那么 `onTrigger` 是一个异步呢？所以第二种用法是，当传入的是一个 `Promise` 对象时。
+#### 那么 `onTrigger` 是一个异步呢？所以第二种用法是，当传入的是一个 `Promise` 或者 `async/await` 对象时。
 
 ```js
 const timerProps={
@@ -127,9 +127,9 @@ class Test extends Compenont{
 | restart()        | 重启Timer   |
 | restartImmediate()| 重启Timer并立即执行onTrigger    |
 
-# 5. Future
+# 5. Desc
 
-Timer将会在v0.2.0支持 `generator函数` 和 `async/await`
+对于`generator`函数请自行使用`thunk`函数进行封装，或者使用类似 [co](https://github.com/tj/co) 的模块返回`Promise`对象。
 
 # 6. LICENSE
 
