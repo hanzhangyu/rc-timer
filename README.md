@@ -3,7 +3,10 @@
 
 Create a timed task in react. Uninstall automatically when component is unmounted.
 
-> travis is comming soon
+[![NPM version](https://img.shields.io/npm/v/rc-timer.svg?style=flat)](https://npmjs.org/package/rc-timer)
+[![Build Status](https://www.travis-ci.org/hanzhangyu/rc-timer.svg?branch=master)](https://www.travis-ci.org/hanzhangyu/rc-timer)
+[![Coverage Status](https://coveralls.io/repos/github/hanzhangyu/rc-timer/badge.svg?branch=master)](https://coveralls.io/github/hanzhangyu/rc-timer?branch=master)
+[![NPM downloads](http://img.shields.io/npm/dm/rc-timer.svg?style=flat)](https://npmjs.org/package/rc-timer)
 
 # 1. Install
 
