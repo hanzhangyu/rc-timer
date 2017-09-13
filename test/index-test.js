@@ -28,7 +28,7 @@ describe('1、Test the Timer init', function () {
         expect(component.instance().state.leftTime).toEqual(10000);
         // props
         expect(component.instance().props.timeout).toEqual(10000);
-        expect(component.instance().props.running).toEqual(true);
+        expect(component.instance().props.enabled).toEqual(true);
         expect(component.instance().props.pause).toEqual(false);
         expect(component.instance().props.sync).toEqual(true);
         expect(component.instance().props.immediate).toEqual(true);
@@ -57,8 +57,8 @@ describe('1、Test the Timer init', function () {
     setTimeout(() => {
         describe('2、Test the code`s run', function () {
             it('test the code is running properly after 5 second ', function () {
-                expect(component.instance().state.leftTime).toEqual(3000);
-                expect(component.find('div').html()).toEqual('<div class="child">3000</div>');
+                expect(component.instance().state.leftTime).toEqual(2000);
+                expect(component.find('div').html()).toEqual('<div class="child">2000</div>');
                 component.getNode().pause();
             });
         });

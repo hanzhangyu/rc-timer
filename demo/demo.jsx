@@ -22,7 +22,7 @@ class Test1 extends Component {
         super();
         this.state = {
             pause: false,
-            running: true,
+            enabled: true,
         };
     }
 
@@ -44,15 +44,15 @@ class Test1 extends Component {
     handleCheckPause = (e) => {
         this.setState({pause: e.target.checked});
     };
-    handleCheckRunning = (e) => {
-        this.setState({running: e.target.checked});
+    handleCheckEnabled = (e) => {
+        this.setState({enabled: e.target.checked});
     };
 
     render() {
-        const {pause, running} = this.state;
+        const {pause, enabled} = this.state;
         const timerProps = {
             pause,
-            running,
+            enabled,
             timeout: 3000,
             ref: 'timer',
             onTrigger: () => {
@@ -71,8 +71,8 @@ class Test1 extends Component {
                     <label htmlFor="pause">pause</label>
                 </div>
                 <div>
-                    <input type="checkbox" onClick={this.handleCheckRunning} defaultChecked id="running" />
-                    <label htmlFor="running">running</label>
+                    <input type="checkbox" onClick={this.handleCheckEnabled} defaultChecked id="enabled" />
+                    <label htmlFor="enabled">enabled</label>
                 </div>
                 <h3>action</h3>
                 <div style={styles.btnWrap}>

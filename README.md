@@ -88,7 +88,7 @@ class Test extends Compenont{
     render(){
         const timerProps = {
             sync:false,
-            running:!asyncIsRun,
+            enabled:!asyncIsRun,
             onTrigger: this.handleTrigger,
         };
         
@@ -96,7 +96,7 @@ class Test extends Compenont{
     }
 }
 ```
-> 当Timer的running这个props变化的时刻会触发Timer的stop()和restart()。
+> 当Timer的enabled这个props变化的时刻会触发Timer的stop()和restart()。
 
 
 
@@ -105,7 +105,7 @@ class Test extends Compenont{
 | 名称        | 描述                        |
 | ----------- | --------------------------- |
 | timeout     | 定时任务的周期              |
-| running     | 定时器是否运行              | 
+| enabled     | 定时器是否启用             | 
 | pause       | 定时器是否暂停              |
 | sync        | onTrigger是否为同步函数     |
 | immediate   | 初次是否立即执行onTrigger   |
@@ -113,7 +113,7 @@ class Test extends Compenont{
 | renderChild | 子节点                      |
 
 #### 备注：
-1. `running` :变化的时刻会触发Timer的stop()和restart()
+1. `enabled` :变化的时刻会触发Timer的stop()和restart()
 2. `pause` :变化的时刻会触发Timer的pause()和recover()
 3. `sync` :当设置为false的时候只有触发Timer的action或者onTrigger为Promise是才能继续运行
 4. `renderChild` :未设置该属性是Timer将采用setTimeout的方式工作

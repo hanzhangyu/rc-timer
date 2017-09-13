@@ -5,7 +5,7 @@ export default class Timer extends React.Component {
         onTrigger: PropTypes.func.isRequired, // 定时器执行trigger函数
         timeout: PropTypes.number, // 定时器时间
         step: PropTypes.number, // 更新剩余时间的时间间隔
-        running: PropTypes.bool, // 是否继续运行
+        enabled: PropTypes.bool, // 是否启用
         pause: PropTypes.bool, // 是否停止
         sync: PropTypes.bool, // 忽略trigger函数是否执行完成
         immediate: PropTypes.bool, // 首次是否立即执行
@@ -14,7 +14,7 @@ export default class Timer extends React.Component {
 
     static defaultProps = {
         timeout: 10000,
-        running: true,
+        enabled: true,
         pause: false,
         sync: true,
         immediate: true,
@@ -52,9 +52,9 @@ export default class Timer extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         // 重启
-        if (!nextProps.running && this.props.running) {
+        if (!nextProps.enabled && this.props.enabled) {
             this.stop();
-        } else if (nextProps.running && !this.props.running) {
+        } else if (nextProps.enabled && !this.props.enabled) {
             this.restart();
         }
 
@@ -71,16 +71,19 @@ export default class Timer extends React.Component {
     }
 
     startTimer = () => {
-        if (this.props.immediate) {
-            this.combineEventAsync();
+        const {immediate, enabled, pause} = this.props;
+        if (!immediate) {
+            this.combineEvent();
             return;
         }
-        this.combineEvent();
+        if (enabled && !pause) {
+            this.combineEventAsync();
+        }
     };
 
     resetTimer = (callback = () => undefined, resetState = true) => {
         if (resetState) {
-            this.setState({leftTime: this.props.timeout}, () => {
+            this.setState({leftTime: this.props.timeout - 1000}, () => {
                 this.clearTimer();
                 callback();
             });
@@ -99,13 +102,15 @@ export default class Timer extends React.Component {
     };
 
     combineEvent = (resetState) => {
-        this.resetTimer(() => {
-            if (this.props.renderChild) {
-                this.loopCalcLeftTime();
-                return;
-            }
-            this.timer = setTimeout(this.combineEventAsync, resetState ? this.props.timeout : this.state.leftTime);
-        }, resetState);
+        if (this.props.enabled && !this.props.pause) {
+            this.resetTimer(() => {
+                if (this.props.renderChild) {
+                    this.loopCalcLeftTime();
+                    return;
+                }
+                this.timer = setTimeout(this.combineEventAsync, resetState ? this.props.timeout : this.state.leftTime);
+            }, resetState);
+        }
     };
 
     combineEventAsync = () => {
