@@ -1,3 +1,7 @@
+## '0.1.2'
+
+- fixed the eabled and pause bug in the initial time
+
 ## `0.1.0'
 
 - initial version

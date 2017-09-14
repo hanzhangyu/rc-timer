@@ -1,6 +1,6 @@
 {
   "name": "rc-timer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Create a timed task in react",
   "repository": {
     "type": "git",
