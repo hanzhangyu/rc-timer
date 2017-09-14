@@ -102,15 +102,15 @@ class Test extends Compenont{
 
 # 3. Props
 
-| 名称        | 描述                        |
-| ----------- | --------------------------- |
-| timeout     | 定时任务的周期              |
-| enabled     | 定时器是否启用             | 
-| pause       | 定时器是否暂停              |
-| sync        | onTrigger是否为同步函数     |
-| immediate   | 初次是否立即执行onTrigger   |
-| step        | 统计剩余时长的周期          |
-| renderChild | 子节点                      |
+| 名称        | 默认值        | 描述                        |
+| ----------- | ----------- | --------------------------- |
+| timeout     | 10000     | 定时任务的周期              |
+| enabled     | true     | 定时器是否启用              | 
+| pause       | false       | 定时器是否暂停              |
+| sync        | true        | onTrigger是否为同步函数     |
+| immediate   | true   | 初次是否立即执行onTrigger   |
+| step        | 1000        | 统计剩余时长的周期          |
+| renderChild | undefined | 子节点                      |
 
 #### 备注：
 1. `enabled` :变化的时刻会触发Timer的stop()和restart()
