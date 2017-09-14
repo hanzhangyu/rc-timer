@@ -36,10 +36,10 @@ class Test1 extends Component {
         this.refs.timer.stop();
     };
     handleReStart = () => {
-        this.refs.timer.reStart();
+        this.refs.timer.restart();
     };
     handleReStartImmediate = () => {
-        this.refs.timer.reStartImmediate();
+        this.refs.timer.restartImmediate();
     };
     handleCheckPause = (e) => {
         this.setState({pause: e.target.checked});
@@ -79,8 +79,8 @@ class Test1 extends Component {
                     <button onClick={this.handlePause}>pause</button>
                     <button onClick={this.handleRecover}>recover</button>
                     <button onClick={this.handleStop}>stop</button>
-                    <button onClick={this.handleReStart}>reStart</button>
-                    <button onClick={this.handleReStartImmediate}>reStartImmediate</button>
+                    <button onClick={this.handleReStart}>restart</button>
+                    <button onClick={this.handleReStartImmediate}>restartImmediate</button>
                 </div>
                 <Timer {...timerProps} />
             </div>

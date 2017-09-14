@@ -72,11 +72,11 @@ export default class Timer extends React.Component {
 
     startTimer = () => {
         const {immediate, enabled, pause} = this.props;
-        if (!immediate) {
-            this.combineEvent();
-            return;
-        }
         if (enabled && !pause) {
+            if (!immediate) {
+                this.combineEvent();
+                return;
+            }
             this.combineEventAsync();
         }
     };
@@ -102,15 +102,13 @@ export default class Timer extends React.Component {
     };
 
     combineEvent = (resetState) => {
-        if (this.props.enabled && !this.props.pause) {
-            this.resetTimer(() => {
-                if (this.props.renderChild) {
-                    this.loopCalcLeftTime();
-                    return;
-                }
-                this.timer = setTimeout(this.combineEventAsync, resetState ? this.props.timeout : this.state.leftTime);
-            }, resetState);
-        }
+        this.resetTimer(() => {
+            if (this.props.renderChild) {
+                this.loopCalcLeftTime();
+                return;
+            }
+            this.timer = setTimeout(this.combineEventAsync, resetState ? this.props.timeout : this.state.leftTime);
+        }, resetState);
     };
 
     combineEventAsync = () => {
