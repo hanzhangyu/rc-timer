@@ -7,13 +7,13 @@ const styles = {
         display: 'flex',
         justifyContent: 'space-around'
     },
-    spanWrap:{
-        fontSize:24,
-        marginTop:20
+    spanWrap: {
+        fontSize: 24,
+        marginTop: 20
     },
-    span:{
-        color:'red',
-        fontWeight:'bold'
+    span: {
+        color: 'red',
+        fontWeight: 'bold'
     }
 };
 
@@ -53,11 +53,12 @@ class Test1 extends Component {
         const timerProps = {
             pause,
             enabled,
-            timeout: 3000,
+            timeout: 4000,
             ref: 'timer',
-            onTrigger: () => {
+            onTrigger: () => new Promise(resolve => setTimeout(() => {
                 console.log('done');
-            },
+                resolve();
+            }, 2000)),
             renderChild: val => (
                 <div style={styles.spanWrap}>There is <span style={styles.span}>{val}</span> ms left.</div>
             )
